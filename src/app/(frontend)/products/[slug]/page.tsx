@@ -1,5 +1,6 @@
 import { headers as getHeaders } from 'next/headers.js'
 import Image from 'next/image'
+import Link from 'next/link'
 import { getPayload } from 'payload'
 import { notFound } from 'next/navigation'
 import { draftMode } from 'next/headers'
@@ -10,13 +11,12 @@ import type { Media } from '@/payload-types'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import PageClient from './page.client'
 
-export default async function ProductPage({ params }: { params: { slug: string } }) {
-  const headers = await getHeaders()
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
   const { isEnabled: isDraft } = await draftMode()
 
-  const { slug } = params
+  const { slug } = await params
 
   // Fetch the product by slug
   const productsResult = await payload.find({
@@ -59,18 +59,18 @@ export default async function ProductPage({ params }: { params: { slug: string }
       
       <nav className="border-b border-neutral-800 bg-black">
         <div className="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
-          <a href="/" className="text-2xl font-semibold text-white hover:text-neutral-300">
+          <Link href="/" className="text-2xl font-semibold text-white hover:text-neutral-300">
             Mercatus demo
-          </a>
+          </Link>
           <div className="flex items-center gap-6">
             {allPages.docs.map((page) => (
-              <a
+              <Link
                 key={page.id}
                 href={`/${page.slug}`}
                 className="text-sm text-neutral-400 hover:text-white transition-colors"
               >
                 {page.title}
-              </a>
+              </Link>
             ))}
             <a
               href="/admin"
@@ -114,12 +114,12 @@ export default async function ProductPage({ params }: { params: { slug: string }
             </div>
 
             <div className="pt-6 border-t border-neutral-800">
-              <a
+              <Link
                 href="/"
                 className="text-neutral-400 hover:text-white text-sm inline-flex items-center gap-2"
               >
                 ← Back to all products
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { headers as getHeaders } from 'next/headers.js'
 import Image from 'next/image'
+import Link from 'next/link'
 import { getPayload } from 'payload'
 import React from 'react'
 
@@ -40,13 +41,13 @@ export default async function HomePage() {
           <h1 className="text-2xl font-semibold text-white">Mercatus demo</h1>
           <div className="flex items-center gap-6">
             {allPages.docs.map((page) => (
-              <a
+              <Link
                 key={page.id}
                 href={`/${page.slug}`}
                 className="text-sm text-neutral-400 hover:text-white transition-colors"
               >
                 {page.title}
-              </a>
+              </Link>
             ))}
             <a
               href={payloadConfig.routes.admin}
@@ -83,7 +84,7 @@ export default async function HomePage() {
               const hasSlug = product.slug
 
               return hasSlug ? (
-                <a
+                <Link
                   key={product.id}
                   href={`/products/${product.slug}`}
                   className="bg-neutral-900 border border-neutral-800 rounded hover:border-neutral-700 transition-colors block"
@@ -105,7 +106,7 @@ export default async function HomePage() {
                       </button>
                     </div>
                   </div>
-                </a>
+                </Link>
               ) : (
                 <div
                   key={product.id}

@@ -1,5 +1,6 @@
 import { headers as getHeaders } from 'next/headers.js'
 import Image from 'next/image'
+import Link from 'next/link'
 import { getPayload } from 'payload'
 import { notFound } from 'next/navigation'
 import { draftMode } from 'next/headers'
@@ -10,13 +11,12 @@ import type { Media, ProductA } from '@/payload-types'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import PageClient from './page.client'
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const headers = await getHeaders()
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
   const { isEnabled: isDraft } = await draftMode()
 
-  const { slug } = params
+  const { slug } = await params
 
   // Fetch the page by slug
   const pagesResult = await payload.find({
@@ -56,12 +56,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
       <nav className="border-b border-neutral-800 bg-black">
         <div className="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
-          <a href="/" className="text-2xl font-semibold text-white hover:text-neutral-300">
+          <Link href="/" className="text-2xl font-semibold text-white hover:text-neutral-300">
             Mercatus demo
-          </a>
+          </Link>
           <div className="flex items-center gap-6">
             {allPages.docs.map((p) => (
-              <a
+              <Link
                 key={p.id}
                 href={`/${p.slug}`}
                 className={`text-sm hover:text-white transition-colors ${
@@ -69,7 +69,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 }`}
               >
                 {p.title}
-              </a>
+              </Link>
             ))}
             <a
               href="/admin"
@@ -146,7 +146,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     const hasSlug = product.slug
 
                     return hasSlug ? (
-                      <a
+                      <Link
                         key={product.id}
                         href={`/products/${product.slug}`}
                         className="bg-neutral-900 border border-neutral-800 rounded hover:border-neutral-700 transition-colors block"
@@ -170,7 +170,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                             <span className="text-sm text-neutral-500">View →</span>
                           </div>
                         </div>
-                      </a>
+                      </Link>
                     ) : (
                       <div
                         key={product.id}
