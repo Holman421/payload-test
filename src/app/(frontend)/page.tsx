@@ -13,7 +13,7 @@ export default async function HomePage() {
   const payload = await getPayload({ config: payloadConfig })
   const { user } = await payload.auth({ headers })
 
-  // Fetch products from Payload CMS
+  // Fetch products from Payload CM
   const productsResult = await payload.find({
     collection: 'productA',
     depth: 2,
@@ -67,9 +67,9 @@ export default async function HomePage() {
         {products.length === 0 ? (
           <div className="text-center py-16 text-neutral-400">
             <p className="mb-4">No products yet</p>
-            <a 
-              href={payloadConfig.routes.admin} 
-              target="_blank" 
+            <a
+              href={payloadConfig.routes.admin}
+              target="_blank"
               rel="noopener noreferrer"
               className="underline text-white"
             >
@@ -98,7 +98,9 @@ export default async function HomePage() {
                   />
                   <div className="p-5">
                     <h3 className="text-lg font-medium mb-2 text-white">{product.title}</h3>
-                    <p className="text-sm text-neutral-400 mb-4 line-clamp-2">{product.description}</p>
+                    <p className="text-sm text-neutral-400 mb-4 line-clamp-2">
+                      {product.description}
+                    </p>
                     <div className="flex justify-between items-center">
                       <span className="text-xl font-medium text-white">${product.price}</span>
                       <button className="bg-white text-black px-5 py-2 rounded text-sm hover:bg-neutral-200 transition-colors">
@@ -121,7 +123,9 @@ export default async function HomePage() {
                   />
                   <div className="p-5">
                     <h3 className="text-lg font-medium mb-2 text-white">{product.title}</h3>
-                    <p className="text-sm text-neutral-400 mb-4 line-clamp-2">{product.description}</p>
+                    <p className="text-sm text-neutral-400 mb-4 line-clamp-2">
+                      {product.description}
+                    </p>
                     <div className="flex justify-between items-center">
                       <span className="text-xl font-medium text-white">${product.price}</span>
                       <span className="text-xs text-neutral-500">Add slug to view</span>
