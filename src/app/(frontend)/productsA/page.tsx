@@ -3,7 +3,7 @@ import config from '@payload-config'
 import React from 'react'
 import type { Media } from '@/payload-types'
 
-export async function ProductsA() {
+export default async function ProductsA() {
   const payload = await getPayload({ config })
 
   const productsA = await payload.find({
@@ -108,5 +108,3 @@ export async function ProductsA() {
     </div>
   )
 }
-
-export default ProductsA
