@@ -46,13 +46,13 @@ export default buildConfig({
   },
   collections: [Users, Media, ProductA, Pages],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || '0b7efeb7b3f6e49ebc7f5a2b',
+  secret: process.env.PAYLOAD_SECRET!,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || 'postgresql://postgres:Mymr_noE12@db.azyilkknebswfkdosrip.supabase.co:5432/postgres',
+      connectionString: process.env.DATABASE_URI!,
     },
   }),
   sharp,
